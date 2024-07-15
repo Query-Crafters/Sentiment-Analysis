@@ -1,8 +1,8 @@
 import pandas as pd
 
-def get_data():
-    print("Loading Data...")
-    df = pd.read_csv('data/apple_iphone_11_reviews.csv')
+def preprocess_data(df):
+    print("Processing Data...")
+    df['review_text'] = df['review_text'].astype(str)
     df['review_rating'] = df['review_rating'].str.split(" ", n=1, expand=True).iloc[:,0].astype('float')
     mapped_ratings = []
     for row in df.iterrows():
