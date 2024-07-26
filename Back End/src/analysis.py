@@ -26,9 +26,10 @@ def get_most_frequent_terms(df):
     for row in df.iterrows():
         i += 1
         print(i)
+        
         row_info = row[1]
         row_terms = row_info['review_text'].split(" ")
-        sentiment = row_info['vader_sentiment']
+        sentiment = row_info['vader_sentiment_label']
         for term in row_terms:
             if term.lower() in stopwords:
                 continue
@@ -44,26 +45,22 @@ def get_most_frequent_terms(df):
 
 
 def analyze_reviews(df):
-    sentiments = []
     try:
-        for row in df.iterrows():
-            review = row[1]
-            vs = vader(review['review_text'])
-            if vs['compound'] >= 0.05:
-                sentiments.append("positive")
-            elif vs['compound'] <= -0.05:
-                sentiments.append("negative")
-            else:
-                sentiments.append("neutral")
-        df['vader_sentiment'] = sentiments
-        sentiment_counts = df['vader_sentiment'].value_counts()
+        df['vader_sentiment'] = df['review_text'].apply(lambda x: vader(x)['compound'])
+        df['vader_sentiment_label'] = df['vader_sentiment'].apply(
+        lambda x: 'positive' if x >= 0.05 else ('negative' if x <= -0.05 else 'neutral'))
+        sentiment_counts = df['vader_sentiment_label'].value_counts()
         sentiment_count_list =[]
         for i, x in enumerate(sentiment_counts):
             sentiment_count_list.append({"value": x, "label": sentiment_counts.index[i]})
         df_dict = df[['review_text', 'review_rating', 'rating_sentiment', 'vader_sentiment']].to_dict(orient='records')
-        matrix = parse_confusion_matrix(df['rating_sentiment'], df['vader_sentiment'])
+        actual_labels = df['review_rating'].apply(
+            lambda x: 'positive' if x >= 4 else ('negative' if x <= 2 else 'neutral'))
+        predicted_labels = df['vader_sentiment_label']
+        conf_matrix = parse_confusion_matrix(actual_labels, predicted_labels)
         most_frequent_terms = get_most_frequent_terms(df)
-        return {"dataframe": df_dict, "confusion_matrix": matrix, "vader_sentiment_counts": sentiment_count_list, 'most_frequent_terms': most_frequent_terms}
+        
+        return {"dataframe": df_dict, "confusion_matrix": conf_matrix, "vader_sentiment_counts": sentiment_count_list, 'most_frequent_terms': most_frequent_terms}
     except Exception as e:
         print(f"Error loading or processing data: {e}")
         return pd.DataFrame()  # Return an empty DataFrame on error

@@ -2,7 +2,7 @@ import pandas as pd
 
 def preprocess_data(df):
     print("Processing Data...")
-    df['review_text'] = df['review_text'].astype(str)
+    df['review_text'] = df['review_text'].astype(str).str.lower()  # Convert to lowercase
     df['review_rating'] = df['review_rating'].str.split(" ", n=1, expand=True).iloc[:,0].astype('float')
     mapped_ratings = []
     for row in df.iterrows():
