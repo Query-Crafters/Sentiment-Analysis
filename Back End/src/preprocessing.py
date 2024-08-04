@@ -1,5 +1,16 @@
 import pandas as pd
 
+def get_data():
+    try:
+        print("Loading Data...")
+        df = pd.read_csv('data/apple_iphone_11_reviews.csv')
+        df = preprocess_data(df)
+        print("Dataframe loaded.")
+        return df
+    except Exception as e:
+        print(f"Error loading data: {e}")
+        return pd.DataFrame()
+
 def preprocess_data(df):
     print("Processing Data...")
     df['review_text'] = df['review_text'].astype(str).str.lower()  # Convert to lowercase
