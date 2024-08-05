@@ -31,7 +31,7 @@ function App() {
       skipEmptyLines: true,
       complete: function (results) {
         console.log(results.data)
-        fetch('http://localhost:5000/reviews', {
+        fetch('http://localhost:5000/bulk_reviews', {
           method: "POST",
           body: JSON.stringify(results.data)
         }).then(response => {

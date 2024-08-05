@@ -8,7 +8,10 @@ from analysis import analyze_reviews
 from models import vader
 import seaborn as sns
 import os
+import json
+from flask_cors import CORS
 app = Flask(__name__)
+CORS(app)
 
 df = pd.DataFrame()
 
@@ -27,6 +30,15 @@ def reviews():
         return jsonify(response)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+@app.route('/bulk_reviews', methods=['POST'])
+def bulk_reviews():
+    print("E")
+    data = pd.DataFrame(json.loads(request.data))
+    data = preprocess_data(data)
+    results = analyze_reviews(data)
+    return jsonify(results)
+
 
 @app.route('/add_review', methods=['POST'])
 def add_review():
