@@ -8,6 +8,7 @@
 
 body{ 
   background-color: cornflowerblue;
+  height: 100%
 }
 
 .App-logo {
@@ -36,13 +37,15 @@ body{
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.main-container{
+  display: flex;
+  width: 75vw;
+  margin-top: 10vh;
+  height: 100%;
+  background-color: white;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .spinner {
@@ -63,24 +66,16 @@ body{
   }
 }
 
-.main-container{
-  display: flex;
-  width: 75vw;
-  margin-top: 10vh;
-  height: 90%;
-  background-color: white;
-  justify-content: center;
-}
-
-Button{
+.form{
   height: 50px;
   width: 150px;
 }
 .button-container{
   margin-top: 10px;
+  margin-bottom: 50vh;
+  width: 150px;
 }
 
-.file-upload{
-  display: flex;
-  flex-direction: column;
+.info-container{
+  height: 30vh;
 }

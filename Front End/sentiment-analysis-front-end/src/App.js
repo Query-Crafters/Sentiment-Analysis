@@ -63,6 +63,12 @@ function App() {
     
     <div className="App">
       <div className='main-container'>
+        <div className='info-container'>
+          <h1>Query Crafters Review Sentiment Analysis Tool</h1>
+          <h2>Upload a csv file with the following columns:</h2>
+          <h3>review_text - The text of the review</h3>
+          <h3>review_rating - The rating of the review, on a scale of 1 to 5</h3>
+        </div>
         <div className='button-container' hidden={hideButton}>
         <form id="fileUploadForm" className='file-upload'>
           <Button

@@ -1,10 +1,33 @@
 .charts {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    justify-content: center;
+    width: 70vw;
 }
 
 .chart {
     height: 400px;
-    width: 600px;
+    margin-bottom: 20px;
+}
 
+.piechart-container{
+    display: flex;
+    flex-direction: row;
+}
+
+.piechart{
+    width: 50%;
+    height: 400px
+}
+
+
+.frequent-terms-container{
+    display: flex;
+    flex-direction: row;
+    height: 35vh;
+}
+
+.frequent-terms{
+    width: 100%;
+    margin-top: 2px;
 }
